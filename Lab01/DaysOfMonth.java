@@ -79,7 +79,7 @@ public class DaysOfMonth {
                 days = isLeap ? 29 : 28; break;
         }
 
-        System.out.println("So ngay cua thang la: " + days);
+        System.out.println("So ngay cua thang " + days);
 
         sc.close();
     }
