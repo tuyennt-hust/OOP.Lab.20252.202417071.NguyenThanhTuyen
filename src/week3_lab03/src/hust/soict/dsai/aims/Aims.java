@@ -51,7 +51,7 @@ public class Aims {
         store.addMedia(cd);
     }
 
-
+    
     public static void showMenu() {
         System.out.println("\nAIMS: ");
         System.out.println("--------------------------------");
