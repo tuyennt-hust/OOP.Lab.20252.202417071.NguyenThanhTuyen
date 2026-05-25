@@ -10,9 +10,10 @@ public class DigitalVideoDisc extends Media implements Playable {
         this.length = length;
     }
 
-    @Override
+    //@Override
     public void play() {
         System.out.println("Playing DVD: " + this.getTitle());
         System.out.println("DVD length: " + length);
+        System.out.println("Director: " + director);
     }
 }
