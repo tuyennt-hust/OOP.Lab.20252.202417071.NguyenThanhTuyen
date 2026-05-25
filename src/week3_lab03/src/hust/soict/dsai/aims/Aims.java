@@ -11,174 +11,196 @@ public class Aims {
     private static Scanner scanner = new Scanner(System.in);
 
     public static void main(String[] args) {
-        // Khởi tạo dữ liệu mẫu cho Store
-        initData();
+
+        initSampleData();
 
         int choice;
-        do {
+        while (true) {
             showMenu();
             choice = scanner.nextInt();
-            scanner.nextLine();
+            scanner.nextLine(); 
 
             switch (choice) {
-                case 1: // View Store
+                case 1:
                     viewStore();
                     break;
-                case 2: // Update Store
+                case 2:
                     updateStore();
                     break;
-                case 3: // View Cart
+                case 3:
                     viewCart();
                     break;
                 case 0:
-                    System.out.println("Tạm biệt!");
-                    break;
+                    System.out.println("Cảm ơn bạn đã sử dụng AIMS. Tạm biệt!");
+                    System.exit(0);
                 default:
-                    System.out.println("Lựa chọn không hợp lệ!");
+                    System.out.println("Lựa chọn không hợp lệ. Vui lòng chọn lại!");
             }
-        } while (choice != 0);
+        }
     }
 
+
+    private static void initSampleData() {
+        store.addMedia(new DigitalVideoDisc("The Lion King", "Animation", "Roger Allers", 87, 19.95f));
+        store.addMedia(new DigitalVideoDisc("Star Wars", "Science Fiction", "George Lucas", 124, 24.95f));
+        store.addMedia(new Book("Java Programming", "Education", 29.99f));
+        
+        CompactDisc cd = new CompactDisc("Chopin Nocturnes", "Music", "Classical", "Rubinstein", 15.0f);
+        cd.addTrack(new Track("Nocturne Op.9 No.1", 5));
+        cd.addTrack(new Track("Nocturne Op.9 No.2", 4));
+        store.addMedia(cd);
+    }
+
+
     public static void showMenu() {
-        System.out.println("\n--- AIMS MENU ---");
+        System.out.println("\nAIMS: ");
+        System.out.println("--------------------------------");
         System.out.println("1. View store");
         System.out.println("2. Update store");
         System.out.println("3. See current cart");
         System.out.println("0. Exit");
-        System.out.print("Chọn: ");
+        System.out.println("--------------------------------");
+        System.out.print("Please choose a number: 0-1-2-3: ");
     }
 
-    private static int readInt(String prompt) {
-        System.out.print(prompt);
-        while (!scanner.hasNextInt()) {
-            scanner.next();
-            System.out.print("Vui lòng nhập số hợp lệ: ");
+
+    private static void viewStore() {
+        System.out.println("\n--- ITEMS IN STORE ---");
+    
+        int choice;
+        while (true) {
+            storeMenu();
+            choice = scanner.nextInt();
+            scanner.nextLine();
+
+            switch (choice) {
+                case 1: 
+                    seeMediaDetails();
+                    break;
+                case 2: 
+                    addMediaToCart();
+                    break;
+                case 3: 
+                    playMediaStore();
+                    break;
+                case 0: 
+                    return;
+                default:
+                    System.out.println("Lựa chọn không hợp lệ!");
+            }
         }
-        int value = scanner.nextInt();
+    }
+
+    public static void storeMenu() {
+        System.out.println("\nOptions: ");
+        System.out.println("--------------------------------");
+        System.out.println("1. See media details");
+        System.out.println("2. Add a media to cart");
+        System.out.println("3. Play a media");
+        System.out.println("0. Back");
+        System.out.println("--------------------------------");
+        System.out.print("Please choose a number: 0-1-2-3: ");
+    }
+
+    private static void seeMediaDetails() {
+        System.out.print("Nhập tiêu đề sản phẩm muốn xem: ");
+        String title = scanner.nextLine();
+    }
+
+    private static void addMediaToCart() {
+        System.out.print("Nhập tiêu đề sản phẩm muốn thêm vào giỏ: ");
+        String title = scanner.nextLine();
+
+    }
+
+    private static void playMediaStore() {
+        System.out.print("Nhập tiêu đề sản phẩm muốn phát: ");
+        String title = scanner.nextLine();
+
+    }
+
+    private static void updateStore() {
+        System.out.println("\n--- UPDATE STORE ---");
+        System.out.println("1. Add a media to store");
+        System.out.println("2. Remove a media from store");
+        System.out.println("0. Back");
+        System.out.print("Your choice: ");
+        int choice = scanner.nextInt();
         scanner.nextLine();
-        return value;
+        
+        if (choice == 1) {
+            System.out.print("Nhập tiêu đề mặt hàng mới: ");
+            String title = scanner.nextLine();
+            store.addMedia(new Book(title, "General", 0.0f)); // Ví dụ thêm nhanh một cuốn sách
+            System.out.println("Đã thêm vào cửa hàng.");
+        } else if (choice == 2) {
+            System.out.print("Nhập tiêu đề mặt hàng muốn xóa: ");
+            String title = scanner.nextLine();
+
+        }
     }
 
-    private static float readFloat(String prompt) {
-        System.out.print(prompt);
-        while (!scanner.hasNextFloat()) {
-            scanner.next();
-            System.out.print("Vui lòng nhập số hợp lệ: ");
+    private static void viewCart() {
+        System.out.println("\n--- CURRENT CART ---");
+        cart.print(); 
+
+        int choice;
+        while (true) {
+            cartMenu();
+            choice = scanner.nextInt();
+            scanner.nextLine();
+
+            switch (choice) {
+                case 1: 
+                    System.out.println("Tính năng lọc đang được phát triển...");
+                    break;
+                case 2:
+                    sortCartMenu();
+                    break;
+                case 3: 
+                    System.out.print("Nhập tiêu đề muốn xóa khỏi giỏ: ");
+                    String title = scanner.nextLine();
+                    break;
+                case 4: 
+                    System.out.print("Nhập tiêu đề muốn phát nhạc: ");
+                    String playTitle = scanner.nextLine();
+
+                    break;
+                case 5: 
+                    System.out.println("Đơn hàng đã được đặt thành công! Giỏ hàng đã được làm trống.");
+                    cart = new Cart(); 
+                    return;
+                case 0: 
+                    return;
+                default:
+                    System.out.println("Lựa chọn không hợp lệ!");
+            }
         }
-        float value = scanner.nextFloat();
+    }
+
+    public static void cartMenu() {
+        System.out.println("\nOptions: ");
+        System.out.println("--------------------------------");
+        System.out.println("1. Filter medias in cart");
+        System.out.println("2. Sort medias in cart");
+        System.out.println("3. Remove media from cart");
+        System.out.println("4. Play a media");
+        System.out.println("5. Place order");
+        System.out.println("0. Back");
+        System.out.println("--------------------------------");
+        System.out.print("Please choose a number: 0-1-2-3-4-5: ");
+    }
+
+    private static void sortCartMenu() {
+        System.out.println("1. Sort by Title - Cost");
+        System.out.println("2. Sort by Cost - Title");
+        System.out.print("Chọn kiểu sắp xếp: ");
+        int type = scanner.nextInt();
         scanner.nextLine();
-        return value;
-    }
-
-    public static void viewStore() {
-        store.print();
-        System.out.println("\nOptions: 1. Add to cart | 2. Play media | 0. Back");
-        int subChoice = readInt("Lựa chọn: ");
-
-        switch (subChoice) {
-            case 1:
-                System.out.print("Nhập tiêu đề sản phẩm muốn thêm: ");
-                String addTitle = scanner.nextLine();
-                Media mediaToAdd = store.searchByTitle(addTitle);
-                if (mediaToAdd != null) {
-                    cart.addMedia(mediaToAdd);
-                } else {
-                    System.out.println("Không tìm thấy sản phẩm trong store.");
-                }
-                break;
-            case 2:
-                System.out.print("Nhập tiêu đề sản phẩm muốn phát: ");
-                String playTitle = scanner.nextLine();
-                Media mediaToPlay = store.searchByTitle(playTitle);
-                if (mediaToPlay instanceof Playable) {
-                    ((Playable) mediaToPlay).play();
-                } else if (mediaToPlay != null) {
-                    System.out.println("Sản phẩm này không thể phát.");
-                } else {
-                    System.out.println("Không tìm thấy sản phẩm trong store.");
-                }
-                break;
-            default:
-                break;
-        }
-    }
-
-    public static void updateStore() {
-        System.out.println("1. Add Media | 2. Remove Media | 0. Back");
-        int subChoice = readInt("Lựa chọn: ");
-
-        switch (subChoice) {
-            case 1:
-                System.out.println("1. Book | 2. DVD");
-                int type = readInt("Chọn loại media: ");
-                System.out.print("Nhập tiêu đề: ");
-                String title = scanner.nextLine();
-                System.out.print("Nhập thể loại: ");
-                String category = scanner.nextLine();
-                float cost = readFloat("Nhập giá: ");
-                if (type == 1) {
-                    store.addMedia(new Book(title, category, cost));
-                } else if (type == 2) {
-                    System.out.print("Nhập đạo diễn: ");
-                    String director = scanner.nextLine();
-                    int length = readInt("Nhập thời lượng (phút): ");
-                    store.addMedia(new DigitalVideoDisc(title, category, director, length, cost));
-                } else {
-                    System.out.println("Loại media không hợp lệ.");
-                }
-                break;
-            case 2:
-                System.out.print("Nhập tiêu đề media muốn xoá: ");
-                String removeTitle = scanner.nextLine();
-                Media mediaToRemove = store.searchByTitle(removeTitle);
-                if (mediaToRemove != null) {
-                    store.removeMedia(mediaToRemove);
-                    System.out.println("Đã xóa sản phẩm khỏi store.");
-                } else {
-                    System.out.println("Không tìm thấy sản phẩm trong store.");
-                }
-                break;
-            default:
-                break;
-        }
-    }
-
-    public static void viewCart() {
+        if (type == 1) {
+            cart.sortByTitle(); 
+        } else if (type == 2) {
+            cart.sortByCost();  
         cart.print();
-        System.out.println("\nOptions: 1. Remove | 2. Play media | 0. Back");
-        int subChoice = readInt("Lựa chọn: ");
-
-        switch (subChoice) {
-            case 1:
-                System.out.print("Nhập tiêu đề sản phẩm muốn xoá khỏi giỏ: ");
-                String removeTitle = scanner.nextLine();
-                Media mediaToRemove = cart.searchByTitle(removeTitle);
-                if (mediaToRemove != null) {
-                    cart.removeMedia(mediaToRemove);
-                } else {
-                    System.out.println("Không tìm thấy sản phẩm trong giỏ.");
-                }
-                break;
-            case 2:
-                System.out.print("Nhập tiêu đề sản phẩm muốn phát: ");
-                String playTitle = scanner.nextLine();
-                Media mediaToPlay = cart.searchByTitle(playTitle);
-                if (mediaToPlay instanceof Playable) {
-                    ((Playable) mediaToPlay).play();
-                } else if (mediaToPlay != null) {
-                    System.out.println("Sản phẩm này không thể phát.");
-                } else {
-                    System.out.println("Không tìm thấy sản phẩm trong giỏ.");
-                }
-                break;
-            default:
-                break;
-        }
     }
-
-    public static void initData() {
-        store.addMedia(new DigitalVideoDisc("The Lion King", "Animation", "Roger Allers", 87, 19.95f));
-        store.addMedia(new DigitalVideoDisc("Star Wars", "Sci-Fi", "George Lucas", 124, 24.95f));
-        store.addMedia(new Book("Java Programming", "Tech", 15.0f));
-    }
-}
+}}
